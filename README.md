@@ -1,2 +1,2 @@
 # PeakAnalysis-
-Analyzing peaks and recording them 
+Analyzing peaks, recording them and other things
