@@ -96,18 +96,18 @@ def preview_channel():
     plt.show()
 
 
-def export_dict():
-    """Export currently loaded channels as dictionary .npy"""
-    if not hasattr(root, "loaded_data") or root.loaded_data is None:
-        messagebox.showwarning("No file", "Please load a file first.")
-        return
-    savepath = filedialog.asksaveasfilename(
-        defaultextension=".npy", filetypes=[("NumPy Dictionary", "*.npy")]
-    )
-    if not savepath:
-        return
-    np.save(savepath, root.loaded_data, allow_pickle=True)
-    messagebox.showinfo("Export", f"Dictionary saved to:\n{savepath}")
+# def export_dict():
+#     """Export currently loaded channels as dictionary .npy"""
+#     if not hasattr(root, "loaded_data") or root.loaded_data is None:
+#         messagebox.showwarning("No file", "Please load a file first.")
+#         return
+#     savepath = filedialog.asksaveasfilename(
+#         defaultextension=".npy", filetypes=[("NumPy Dictionary", "*.npy")]
+#     )
+#     if not savepath:
+#         return
+#     np.save(savepath, root.loaded_data, allow_pickle=True)
+#     messagebox.showinfo("Export", f"Dictionary saved to:\n{savepath}")
 
 
 # --------------------------
@@ -187,8 +187,8 @@ def run_analysis():
 
     # --- Results popup
     result_text = (
-        f"Method 1 (Avg of individual peaks): {avg_peak_freq:.2f} Hz, {avg_peak_power:.2f}\n"
-        f"Method 2 (Peak of averaged PSD): {avg_psd_peak_f:.2f} Hz, {avg_psd_peak_p:.2f}"
+        f"Avg of individual peaks: {avg_peak_freq:.2f} Hz, {avg_peak_power:.2f}\n"
+        f"Peak of averaged PSD: {avg_psd_peak_f:.2f} Hz, {avg_psd_peak_p:.2f}"
     )
     messagebox.showinfo("Results", result_text)
 
@@ -211,7 +211,7 @@ frame.grid(row=0, column=0)
 # File load buttons
 ttk.Button(frame, text="Load File (.smr/.npy)", command=load_file).grid(row=0, column=0, columnspan=2, pady=5)
 ttk.Button(frame, text="Preview Channel", command=preview_channel).grid(row=1, column=0, columnspan=2, pady=5)
-ttk.Button(frame, text="Export Dictionary", command=export_dict).grid(row=2, column=0, columnspan=2, pady=5)
+#ttk.Button(frame, text="Export Dictionary", command=export_dict).grid(row=2, column=0, columnspan=2, pady=5)
 
 # Channel dropdown
 ttk.Label(frame, text="Channel:").grid(row=3, column=0, sticky="w")
@@ -223,7 +223,7 @@ channel_menu.grid(row=3, column=1)
 ttk.Label(frame, text="FFT Size:").grid(row=4, column=0, sticky="w")
 fft_var = tk.StringVar(value="32768")
 fft_menu = ttk.Combobox(frame, textvariable=fft_var,
-                        values=["1024", "2048", "4096", "8192", "16384", "32768"])
+                        values=["1024", "2048", "4096", "8192", "16384", "32768", "65536", "131072", "262144"])
 fft_menu.grid(row=4, column=1)
 
 # Time window controls
