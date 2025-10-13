@@ -2,11 +2,7 @@ import numpy as np
 from tkinter import filedialog
 import os
 
-# --------------------------
-# Helper to make dict channel
-# --------------------------
 def _clean_channel_array(arr):
-    """Ensure array is 1D float"""
     return np.asarray(arr, dtype=float).squeeze()
 
 def generate_beta_signal_dict(sampling_rate=1024, duration=1.0):
@@ -15,7 +11,6 @@ def generate_beta_signal_dict(sampling_rate=1024, duration=1.0):
     in the beta range (Hz) for testing PSD tools.
     Returns a dict: {'ch1': {'sampling_rate': fs, 'data': signal}}
     """
-    # Frequency to power map
     freq_power_map = {
         0: 0,
         1: 0,
@@ -56,8 +51,7 @@ def generate_beta_signal_dict(sampling_rate=1024, duration=1.0):
     for f, p in freq_power_map.items():
         if p <= 0:
             continue
-        phase = np.random.uniform(0, 2*np.pi)  # random phase
-        # amplitude proportional to sqrt(power) to match PSD magnitude
+        phase = np.random.uniform(0, 2*np.pi)  
         amp = np.sqrt(p)
         signal += amp * np.sin(2 * np.pi * f * t + phase)
 
@@ -65,9 +59,7 @@ def generate_beta_signal_dict(sampling_rate=1024, duration=1.0):
     signal_dict = {'ch1': {'sampling_rate': float(sampling_rate), 'data': _clean_channel_array(signal)}}
     return signal_dict
 
-# --------------------------
-# Save function
-# --------------------------
+
 def save_signal_dict(signal_dict):
     filepath = filedialog.asksaveasfilename(
         title="Save signal dictionary",
@@ -79,9 +71,6 @@ def save_signal_dict(signal_dict):
     np.save(filepath, signal_dict)
     print(f"Saved: {os.path.basename(filepath)}")
 
-# --------------------------
-# Example usage
-# --------------------------
 if __name__ == "__main__":
     signal_dict = generate_beta_signal_dict(sampling_rate=1024, duration=25)
     save_signal_dict(signal_dict)
